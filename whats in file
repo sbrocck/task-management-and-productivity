@@ -1,0 +1,13 @@
+task-management-and-productivity/
+├── backend/
+│   ├── server.js
+│   └── models/
+│        task.js
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   └── App.js
+│   │   └── index.js
+│   ├── package.json
+├── .gitignore
+├── README.md
