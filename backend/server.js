@@ -22,3 +22,16 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+/backend
+    /controllers
+        authController.js
+        taskController.js
+    /routes
+        authRoutes.js
+        taskRoutes.js
+    /models
+        user.js
+        task.js
+    /middleware
+        authMiddleware.js
+    server.js
