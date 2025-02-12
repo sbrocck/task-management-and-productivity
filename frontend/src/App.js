@@ -1,26 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000'); // Socket server URL
 
 function App() {
-  const [tasks, setTasks] = useState([]);  // Initialize tasks as an empty array
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    // Listen for real-time task updates
+    socket.on('taskUpdated', (updatedTask) => {
+      setTasks(prevTasks => 
+        prevTasks.map(task => 
+          task._id === updatedTask._id ? updatedTask : task
+        )
+      );
+    });
+
+    // Cleanup on component unmount
+    return () => socket.off('taskUpdated');
+  }, []);
+
+  // Fetch tasks from API
+  useEffect(() => {
+    fetch('/api/tasks')
+      .then(res => res.json())
+      .then(data => setTasks(data));
+  }, []);
 
   return (
-    <div className="App">
+    <div>
       <h1>Task Management App</h1>
-      <div>
-        {/* Button to create a new task */}
-        <button onClick={() => alert('Create Task')}>Create Task</button>
-      </div>
-      <div>
-        <h2>Task List</h2>
-        <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>
-              <h3>{task.title}</h3>
-              <p>{task.description}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul>
+        {tasks.map(task => (
+          <li key={task._id}>
+            {task.title} - {task.status}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
