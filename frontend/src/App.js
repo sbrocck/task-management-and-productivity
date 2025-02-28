@@ -107,3 +107,25 @@ const App = () => {
 
 export default App;
 
+// Add filtering functionality to App.js
+
+const [filter, setFilter] = useState({ priority: '', completed: '', deadline: '' });
+
+const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilter({ ...filter, [name]: value });
+};
+
+const fetchFilteredTasks = async () => {
+    try {
+        const res = await axios.get('http://localhost:5000/tasks', { params: filter });
+        setTasks(res.data);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+// Call fetchFilteredTasks whenever the filter state changes
+useEffect(() => {
+    fetchFilteredTasks();
+}, [filter]);
