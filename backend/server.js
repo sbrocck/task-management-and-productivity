@@ -1,34 +1,40 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-
-// Import routes
-const authRoutes = require("./routes/authRoutes");
-const taskRoutes = require("./routes/taskRoutes");
-
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
 app.use(cors());
 app.use(express.json());
 
-// MongoDB connection
-mongoose.connect("mongodb://localhost/task-app", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/task_manager', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Socket.io: Notify users when a task is updated
+io.on('connection', (socket) => {
+  console.log('New client connected');
+
+  // Notify users of task updates
+  socket.on('taskUpdate', (task) => {
+    socket.broadcast.emit('taskUpdated', task);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+  });
 });
 
-// Basic endpoint to verify the server is running
-app.get("/", (req, res) => {
-  res.send("Task Management API");
-});
+// Routes
+const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+app.use('/api', authRoutes);
+app.use('/api', taskRoutes);
 
-// Authentication routes
-app.use("/api/auth", authRoutes);
-
-// Task management routes
-app.use("/api/tasks", taskRoutes);
-
-// Set the server to listen on a specific port
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(5000, () => {
+  console.log('Server running on port 5000');
 });
