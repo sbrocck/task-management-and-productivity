@@ -1,16 +1,18 @@
-// routes/taskRoutes.js
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const taskController = require('../controllers/taskController');
+const taskController = require("../controllers/taskController");
+const authMiddleware = require("../middleware/authMiddleware"); // Optional, if you want authentication
 
-// Create a new task
-router.post('/tasks', taskController.createTask);
+// Route to create a new task
+router.post("/tasks", authMiddleware, taskController.createTask);
 
-// Update an existing task (mark as completed, or change priority)
-router.patch('/tasks/:id', taskController.updateTask);
+// Route to get all tasks
+router.get("/tasks", authMiddleware, taskController.getTasks);
 
-// Get all tasks with filtering options
-router.get('/tasks', taskController.getTasks);
+// Route to update a task
+router.put("/tasks/:taskId", authMiddleware, taskController.updateTask);
+
+// Route to delete a task
+router.delete("/tasks/:taskId", authMiddleware, taskController.deleteTask);
 
 module.exports = router;
