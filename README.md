@@ -19,33 +19,33 @@ This is a Task Management and Productivity Web Application. It allows users to c
 
 ## Installation
 1. Clone the repository:
-   ```sh
-   git clone [your-repo-link]
-   cd task-management-and-productivity
-   ```
+    ```sh
+    git clone [your-repo-link]
+    cd task-management-and-productivity
+    ```
 
 2. Install dependencies:
-   ```sh
-   cd backend
-   npm install
-   cd ../frontend
-   npm install
-   ```
+    ```sh
+    cd backend
+    npm install
+    cd ../frontend
+    npm install
+    ```
 
 3. Start the backend server:
-   ```sh
-   cd backend
-   node server.js
-   ```
+    ```sh
+    cd backend
+    node server.js
+    ```
 
 4. Start the frontend:
-   ```sh
-   cd frontend
-   npm start
-   ```
+    ```sh
+    cd frontend
+    npm start
+    ```
 
 ## File Structure
-```
+```plaintext
 backend
 ├── controllers
 │   ├── authController.js
@@ -56,9 +56,7 @@ backend
 ├── routes
 │   ├── authRoutes.js
 │   ├── taskRoutes.js
-│   ├── taskroutes.js
 ├── server.js
-├── unknown
 
 frontend
 ├── public
@@ -70,6 +68,6 @@ frontend
 │   ├── pages
 │   │   ├── Home.js
 │   │   ├── Dashboard.js
-│   ├── task form
 │   ├── App.js
 │   ├── index.js
+```
