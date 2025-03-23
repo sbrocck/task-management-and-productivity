@@ -71,3 +71,5 @@ frontend
 │   ├── App.js
 │   ├── index.js
 ```
+##  Citation
+This project has benefited from the assistance of AI tools, specifically ChatGPT by OpenAI. The AI helped piece together sections of the code when I faced difficulties, provided suggestions for refining the code, and ensured that it followed best practices. Additionally, the AI supported me in organizing and structuring the README file to maintain clarity and coherence. You can learn more about this tool at OpenAI's website.
