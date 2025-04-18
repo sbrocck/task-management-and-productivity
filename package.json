@@ -1,17 +1,21 @@
 {
-  "name": "task-management-and-productivity",
+  "name": "raspberry-pi-sensor-app",
   "version": "1.0.0",
-  "description": "Task management and productivity web app targeted to remote teams",
-  "main": "index.js",
+  "description": "A Raspberry Pi app that reads sensor data and sends it to a web server",
+  "main": "sensorInterface.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node sensorInterface.js",
+    "dev": "nodemon sensorInterface.js",
+    "test": "echo \"No test specified\" && exit 1"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "express": "^4.17.1",
-    "onoff": "^6.0.1",
-    "axios": "^0.21.1"
+    "onoff": "^6.0.1"
   },
-  "author": "",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "author": "Your Name",
   "license": "ISC"
 }
