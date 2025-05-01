@@ -1,19 +1,23 @@
-// sensorSimulator.js
-const axios = require('axios');
+const SensorData = require('../models/sensorData');  // Import the model
 
-function simulateSensorData() {
-  const value = Math.round(Math.random()); // Simulates 0 or 1 (like a switch)
-  const timestamp = new Date().toISOString();
+// Function to handle sensor data
+exports.receiveSensorData = async (req, res) => {
+  const { value, timestamp } = req.body;  // Destructure the incoming data
 
-  axios.post('http://localhost:3000/api/sensor-data', {
-    value,
-    timestamp
-  }).then(res => {
-    console.log("Sensor data sent:", { value, timestamp });
-  }).catch(err => {
-    console.error("Failed to send simulated data:", err.message);
-  });
-}
+  try {
+    // Create a new SensorData instance
+    const newSensorData = new SensorData({
+      value,
+      timestamp
+    });
 
-// Simulate data every 3 seconds
-setInterval(simulateSensorData, 3000);
+    // Save to MongoDB
+    await newSensorData.save();
+
+    // Respond back with a success message
+    res.status(201).json({ message: 'Sensor data received and saved!', data: newSensorData });
+  } catch (error) {
+    console.error("Error saving sensor data:", error);
+    res.status(500).json({ message: "Error saving sensor data", error });
+  }
+};
