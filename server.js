@@ -39,13 +39,20 @@ io.on("connection", (socket) => {
   });
 });
 
-// Routes
+// Import Routes
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-app.use("/api/auth", authRoutes);
-app.use("/api/tasks", taskRoutes);
+
+// Sensor Data Route (handling POST requests to "/api/tasks/sensor-data")
+const { receiveSensorData } = require("./controllers/taskController");
+taskRoutes.post("/sensor-data", receiveSensorData); // <-- This is where you add the sensor data route
+
+// Use Routes
+app.use("/api/auth", authRoutes);  // Auth routes (e.g., login, signup)
+app.use("/api/tasks", taskRoutes);  // Task routes (CRUD operations for tasks)
 
 // Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
 
