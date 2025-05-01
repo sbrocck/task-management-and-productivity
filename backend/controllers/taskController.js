@@ -58,5 +58,23 @@ exports.deleteTask = async (req, res) => {
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting task", error });
+// Receive and save sensor data as a task
+exports.receiveSensorData = async (req, res) => {
+  try {
+    const { value, timestamp } = req.body;
+
+    const newTask = new Task({
+      title: `Sensor Trigger: ${value}`,
+      description: `Received sensor input at ${timestamp}`,
+      assignedTo: "System",
+      priority: value === 1 ? "High" : "Low",
+      dueDate: null
+    });
+
+    await newTask.save();
+    res.status(201).json({ message: "Sensor data saved as task", data: newTask });
+  } catch (error) {
+    res.status(500).json({ message: "Error saving sensor data", error });
   }
 };
+
