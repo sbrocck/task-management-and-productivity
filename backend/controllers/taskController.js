@@ -1,4 +1,18 @@
 const { createTask, getTasks, updateTask, deleteTask, receiveSensorData } = require("../controllers/taskController");
+const express = require("express");
+const router = express.Router();
+const taskController = require("../controllers/taskController"); // Assuming this is where your controller is located
+
+// Regular task routes
+router.post("/", taskController.createTask);  // Create task
+router.get("/", taskController.getTasks);    // Get tasks
+router.put("/:taskId", taskController.updateTask); // Update task
+router.delete("/:taskId", taskController.deleteTask); // Delete task
+
+// ✅ Add the sensor data route here:
+router.post("/sensor-data", taskController.receiveSensorData);  // <-- This is your new route
+
+module.exports = router;
  // Import the Task model
 
 // Create a new task
