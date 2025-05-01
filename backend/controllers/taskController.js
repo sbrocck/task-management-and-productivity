@@ -1,4 +1,5 @@
-const Task = require("../models/task"); // Import the Task model
+const { createTask, getTasks, updateTask, deleteTask, receiveSensorData } = require("../controllers/taskController");
+ // Import the Task model
 
 // Create a new task
 exports.createTask = async (req, res) => {
