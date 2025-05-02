@@ -13,7 +13,9 @@ const TaskForm = ({ onTaskCreate }) => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <label htmlFor="taskInput">New Task:</label>
             <input 
+                id="taskInput"
                 type="text" 
                 value={task} 
                 onChange={(e) => setTask(e.target.value)} 
@@ -23,5 +25,7 @@ const TaskForm = ({ onTaskCreate }) => {
         </form>
     );
 };
+
+export default TaskForm;
 
 export default TaskForm;
