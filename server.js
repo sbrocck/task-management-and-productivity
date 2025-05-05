@@ -16,7 +16,6 @@ const io = socketIo(server, {
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
 mongoose
   .connect("mongodb://localhost:27017/task_manager", {
     useNewUrlParser: true,
@@ -25,11 +24,10 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// Socket.io: Notify users when a task is updated
+// Socket.IO event for task updates
 io.on("connection", (socket) => {
   console.log("⚡ New client connected");
 
-  // Broadcast task updates
   socket.on("taskUpdate", (task) => {
     socket.broadcast.emit("taskUpdated", task);
   });
@@ -39,20 +37,12 @@ io.on("connection", (socket) => {
   });
 });
 
-// Import Routes
+// Routes
 const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
-// Sensor Data Route (handling POST requests to "/api/tasks/sensor-data")
-const { receiveSensorData } = require("./controllers/taskController");
-taskRoutes.post("/sensor-data", receiveSensorData); // <-- This is where you add the sensor data route
+app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
-// Use Routes
-app.use("/api/auth", authRoutes);  // Auth routes (e.g., login, signup)
-app.use("/api/tasks", taskRoutes);  // Task routes (CRUD operations for tasks)
-
-// Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
-
