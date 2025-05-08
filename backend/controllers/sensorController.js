@@ -1,14 +1,12 @@
-const SensorData = require('../models/sensorData');  // Import the model to save sensor data
+const SensorData = require('../models/sensorData');
 
-// Controller function to handle sensor data
-exports.receiveSensorData = async (req, res) => {
-  const { value, timestamp } = req.body; // Extract data from the request body
-
+exports.receiveData = async (req, res) => {
   try {
-    const newSensorData = new SensorData({ value, timestamp });  // Create a new instance of SensorData
-    await newSensorData.save();  // Save to the database
-    res.status(201).json(newSensorData);  // Respond with the saved data
+    const { value, timestamp } = req.body;
+    const data = new SensorData({ value, timestamp });
+    await data.save();
+    res.status(201).json({ message: 'Sensor data saved' });
   } catch (error) {
-    res.status(500).json({ message: 'Error saving sensor data', error });
+    res.status(500).json({ error: error.message });
   }
 };
