@@ -1,30 +1,31 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-
-const SECRET = "your_jwt_secret"; // Replace with process.env.JWT_SECRET in production
+const User = require("../models/User");  // Adjust path as necessary
 
 const authMiddleware = async (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer <token>"
+    try {
+        // Extract token from Authorization header
+        const token = req.header("Authorization");
 
-  if (!token) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
-  }
+        if (!token || !token.startsWith("Bearer ")) {
+            return res.status(401).json({ error: "Access denied. Invalid token format." });
+        }
 
-  try {
-    const decoded = jwt.verify(token, SECRET);
-    const user = await User.findById(decoded.id).select("-password");
+        // Remove 'Bearer ' from token string
+        const jwtToken = token.replace("Bearer ", "");
 
-    if (!user) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
+        // Verify the JWT token using the secret stored in environment variables
+        const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET || "default_jwt_secret");
 
-    req.user = user; // Attach user to request
-    next();
-  } catch (err) {
-    res.status(401).json({ error: "Invalid or expired token" });
-  }
-};
+        // Find user by the decoded user ID
+        const user = await User.findById(decoded.userId);
+        
+        if (!user) {
+            return res.status(401).json({ error: "User not found." });
+        }
 
-module.exports = authMiddleware;
+        // Attach user to the request object for later use
+        req.user = user;
+        next(); // Pass control to the next middleware
 
-
+    } catch (err) {
+        // Handle errors based on their type
