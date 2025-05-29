@@ -25,13 +25,42 @@ mongoose
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-// Socket.IO event for task updates
+// Import routes
+const authRoutes = require("./routes/authRoutes");
+const taskRoutes = require("./routes/taskRoutes");
+const { router: sensorRouter, setSocketIo } = require("./routes/sensorRoutes");
+
+// Use routes
+app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api", sensorRouter); // Sensor routes mounted here
+
+// Pass Socket.IO instance to sensor routes so they can emit events
+setSocketIo(io);
+
+// Socket.IO event handlers
 io.on("connection", (socket) => {
   console.log("⚡ New client connected");
 
   socket.on("taskUpdate", (task) => {
     socket.broadcast.emit("taskUpdated", task);
   });
+
+  socket.on("disconnect", () => {
+    console.log("❌ Client disconnected");
+  });
+});
+
+// Error handling for unknown routes
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
+// Graceful shutdown
+process.on("SIGINT", () => {
+  mongoose.connection.close(() => {
+    console.lo
+
 
   socket.on("disconnect", () => {
     console.log("❌ Client disconnected");
