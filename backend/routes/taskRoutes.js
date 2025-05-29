@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const taskController = require("../controllers/taskController"); // Import task controller
-const sensorController = require("../controllers/sensorController"); // Import sensor controller
+const taskController = require("../controllers/taskController");
+const sensorController = require("../controllers/sensorController");
 
-// Task Routes
-router.post("/", taskController.createTask);  // Create task
-router.get("/", taskController.getTasks);    // Get tasks
-router.put("/:taskId", taskController.updateTask); // Update task
-router.delete("/:taskId", taskController.deleteTask); // Delete task
+// Task routes
+router.post("/", taskController.createTask);           // Create a new task
+router.get("/", taskController.getTasks);               // Get tasks (with optional pagination)
+router.put("/:id", taskController.updateTask);          // Update a task by ID
+router.delete("/:id", taskController.deleteTask);       // Delete a task by ID
 
-// Add the sensor data route
-router.post("/sensor-data", sensorController.receiveSensorData);  // Use sensorController for this route
+// Route for receiving sensor data related to tasks or IoT
+router.post("/sensor-data", sensorController.receiveSensorData);
 
 module.exports = router;
