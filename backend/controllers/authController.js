@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const SECRET = "your_jwt_secret"; // Replace with process.env.JWT_SECRET in production
+const SECRET = process.env.JWT_SECRET || "dev_secret";
+// Replace with process.env.JWT_SECRET in production
 
 // Register a new user
 exports.register = async (req, res) => {
