@@ -1,45 +1,43 @@
 const mongoose = require("mongoose");
 
-const TaskSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: String,
-  completed: { type: Boolean, default: false },
-  dueDate: Date,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-});
-
-module.exports = mongoose.model("Task", TaskSchema);
-
+const TaskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true // Ensure that every task has a title
+      required: true, // Ensure that every task has a title
+      trim: true
     },
     description: {
       type: String,
-      required: false // Description is optional
+      required: false,
+      trim: true
     },
     dueDate: {
-      type: Date, // Can be renamed to 'deadline' if needed
-      required: false // Due date is optional
+      type: Date,
+      required: false
     },
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Links the task to a specific user
-      required: false // Task doesn't have to be assigned to anyone
+      ref: "User",
+      required: false
     },
     status: {
       type: String,
       enum: ["to-do", "in-progress", "completed"],
-      default: "to-do" // Default status when the task is created
+      default: "to-do"
     },
     priority: {
       type: String,
       enum: ["low", "medium", "high"],
-      default: "medium" // Default priority level
+      default: "medium"
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true // The user who created the task
     }
   },
   { timestamps: true } // Automatically add createdAt and updatedAt fields
 );
 
-module.exports = mongoose.model("Task", taskSchema);
+module.exports = mongoose.model("Task", TaskSchema);
