@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 
-const sensorDataSchema = new mongoose.Schema({
+const SensorDataSchema = new mongoose.Schema({
   value: {
     type: Number,
     required: true
   },
   timestamp: {
     type: Date,
-    required: true
+    required: true,
+    default: Date.now // Optional: auto-set timestamp if not provided
   }
 });
 
-const SensorData = mongoose.model('SensorData', sensorDataSchema);
+// Optional: Add an index for faster queries by timestamp
+SensorDataSchema.index({ timestamp: -1 });
+
+const SensorData = mongoose.model('SensorData', SensorDataSchema);
 module.exports = SensorData;
