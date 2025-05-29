@@ -1,11 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const sensorController = require('../controllers/sensorController');
+const SensorData = require('../models/SensorData');
 
-// POST route to receive sensor data
-router.post('/sensor-data', sensorController.receiveData);
+// This function will be used to access the Socket.IO instance later
+let io;
 
-// GET route to retrieve all sensor data
-router.get('/sensor-data', sensorController.getSensorData);
+const setSocketIo = (socketIoInstance) => {
+  io = socketIoInstance;
+};
 
-module.exports = router;
+// POST /api/sensor-data
+router.post('/sensor-data', async (req, res) => {
+  try {
+    const { value, timestamp, sensorId, sensorType } = req.body;
+
+    const sensorData = new SensorData({
+      value,
+      timestamp,
+      sensorId,
+      sensorType
+    });
+
+    const savedData = await sensorData.save();
+
+    // Emit real-time update to all connected clients
+    if (io) {
+      io.emit('sensorDataUpdate', savedData);
+    }
+
+    res.status(201).json(savedData);
+  } catch (error) {
+    console.error('Error saving sensor data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+module.exports = { router, setSocketIo };
