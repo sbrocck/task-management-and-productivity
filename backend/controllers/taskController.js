@@ -1,17 +1,26 @@
 const Task = require("../models/task");
-const SensorData = require("../models/sensorData"); // Optional, if you're storing sensor data
+const SensorData = require("../models/sensorData"); // Optional
 
 // Create a new task
 exports.createTask = async (req, res) => {
   try {
-    if (!req.body.title) {
-      return res.status(400).json({ error: "Task title is required" });
+    const { title, description, dueDate, completed } = req.body;
+
+    if (!title || typeof title !== "string") {
+      return res.status(400).json({ error: "Valid task title is required" });
     }
 
-    const task = await Task.create({ ...req.body, user: req.user._id });
+    const task = await Task.create({
+      title,
+      description,
+      dueDate,
+      completed,
+      user: req.user._id
+    });
+
     res.status(201).json({ message: "Task created successfully", task });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: "Failed to create task", details: err.message });
   }
 };
 
@@ -27,17 +36,19 @@ exports.getTasks = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    res.json({ tasks, currentPage: page });
+    res.status(200).json({ tasks, currentPage: page });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Failed to fetch tasks", details: err.message });
   }
 };
 
 // Update a task
 exports.updateTask = async (req, res) => {
   try {
-    if (!req.body.title) {
-      return res.status(400).json({ error: "Task title is required" });
+    const { title } = req.body;
+
+    if (title && typeof title !== "string") {
+      return res.status(400).json({ error: "Title must be a string" });
     }
 
     const task = await Task.findOneAndUpdate(
@@ -52,7 +63,7 @@ exports.updateTask = async (req, res) => {
 
     res.json({ message: "Task updated successfully", task });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: "Failed to update task", details: err.message });
   }
 };
 
@@ -61,7 +72,7 @@ exports.deleteTask = async (req, res) => {
   try {
     const deleted = await Task.findOneAndDelete({
       _id: req.params.id,
-      user: req.user._id,
+      user: req.user._id
     });
 
     if (!deleted) {
@@ -70,21 +81,9 @@ exports.deleteTask = async (req, res) => {
 
     res.json({ message: "Task deleted successfully" });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: "Failed to delete task", details: err.message });
   }
 };
 
-// Handle IoT sensor data (can be expanded to save to DB)
-exports.receiveSensorData = async (req, res) => {
-  const data = req.body;
-  console.log("📡 Received sensor data:", data);
-
-  try {
-    const newSensorData = new SensorData(data); // Ensure model fields match the structure
-    await newSensorData.save();
-    res.status(201).json({ message: "Sensor data saved" });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
-
+// Receive and optionally store IoT sensor data
+export
