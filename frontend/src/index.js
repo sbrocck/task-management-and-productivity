@@ -1,12 +1,31 @@
-import io from 'socket.io-client'; // Ensure socket.io-client is installed (npm install socket.io-client)
+// frontend/src/components/SensorData.js
+import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
-// Establish a connection to the server
-const socket = io("http://localhost:5000"); // Replace with your server URL
+const socket = io("http://localhost:5000"); // Adjust URL if needed
 
-// Listen for the real-time sensor data update
-socket.on("sensorDataUpdate", (data) => {
-  console.log("Sensor data received:", data);
-  // Update your UI here, like adding it to a div or updating a graph
-  document.getElementById("sensorValue").innerText = `Sensor Value: ${data.value}`;
-  document.getElementById("timestamp").innerText = `Timestamp: ${data.timestamp}`;
-});
+const SensorData = () => {
+  const [sensorData, setSensorData] = useState({ value: null, timestamp: null });
+
+  useEffect(() => {
+    // Listen for sensor data updates
+    socket.on("sensorDataUpdate", (data) => {
+      setSensorData(data);
+    });
+
+    // Cleanup on unmount
+    return () => {
+      socket.off("sensorDataUpdate");
+    };
+  }, []);
+
+  return (
+    <div>
+      <h2>Real-time Sensor Data</h2>
+      <p>Sensor Value: {sensorData.value !== null ? sensorData.value : "Loading..."}</p>
+      <p>Timestamp: {sensorData.timestamp || "Loading..."}</p>
+    </div>
+  );
+};
+
+export default SensorData;
