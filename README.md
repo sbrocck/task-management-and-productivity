@@ -17,15 +17,10 @@ A sleek web app designed for remote teams to create, assign, and track tasks wit
 
 🛠️ Tech Stack
 Frontend: React
-
 Backend: Node.js, Express
-
 Database: MongoDB
-
 Real-time: Socket.IO
-
 Authentication: JWT
-
 Other: Axios, Mongoose, dotenv, CORS
 
 📁 Project Structure
@@ -63,19 +58,21 @@ frontend/
     └── index.js
 💻 Getting Started
 Backend
+
 bash
 Copy
 Edit
 cd backend
 npm install
-npm run dev   # starts the server with nodemon for auto reload
+npm run dev    # starts the server with nodemon for auto reload
 Frontend
+
 bash
 Copy
 Edit
 cd frontend
 npm install
-npm start    # starts the React development server
+npm start      # starts the React development server
 🌐 Usage
 Open your browser at http://localhost:3000
 
