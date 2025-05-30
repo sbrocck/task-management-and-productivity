@@ -32,7 +32,6 @@ This Task Management and Productivity Web Application is designed for remote tea
    ```bash
    git clone [your-repo-link]
    cd task-management-and-productivity
-Backend folder structure
 backend/
 ├── controllers/
 │   ├── authController.js
