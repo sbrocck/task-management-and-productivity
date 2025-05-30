@@ -33,10 +33,6 @@ This Task Management and Productivity Web Application is designed for remote tea
    git clone [your-repo-link]
    cd task-management-and-productivity
 Backend folder structure
-
-pgsql
-Copy
-Edit
 backend/
 ├── controllers/
 │   ├── authController.js
@@ -53,11 +49,8 @@ backend/
 ├── sensorInterface.js
 ├── sensorSimulator.js
 └── package.json
-Frontend folder structure
 
-pgsql
-Copy
-Edit
+
 frontend/
 ├── public/
 │   └── index.html
@@ -70,6 +63,7 @@ frontend/
     │   └── Dashboard.js
     ├── App.js
     └── index.js
+
 🚀 Running the Application
 Backend
 Navigate to the backend directory
