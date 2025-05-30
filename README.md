@@ -33,35 +33,35 @@ This Task Management and Productivity Web Application is designed for remote tea
    git clone [your-repo-link]
    cd task-management-and-productivity
 backend/
-├── controllers/
-│   ├── authController.js
-│   └── taskController.js
-├── middleware/
-│   └── authMiddleware.js
-├── models/
-│   ├── User.js
-│   └── Task.js
-├── routes/
-│   ├── authRoutes.js
-│   └── taskRoutes.js
-├── server.js
-├── sensorInterface.js
-├── sensorSimulator.js
-└── package.json
-
+  controllers/
+    authController.js
+    taskController.js
+  middleware/
+    authMiddleware.js
+  models/
+    User.js
+    Task.js
+  routes/
+    authRoutes.js
+    taskRoutes.js
+  server.js
+  sensorInterface.js
+  sensorSimulator.js
+  package.json
 
 frontend/
-├── public/
-│   └── index.html
-└── src/
-    ├── components/
-    │   ├── TaskForm.js
-    │   └── TaskList.js
-    ├── pages/
-    │   ├── Home.js
-    │   └── Dashboard.js
-    ├── App.js
-    └── index.js
+  public/
+    index.html
+  src/
+    components/
+      TaskForm.js
+      TaskList.js
+    pages/
+      Home.js
+      Dashboard.js
+    App.js
+    index.js
+
 
 🚀 Running the Application
 Backend
