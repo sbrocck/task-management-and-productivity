@@ -1,84 +1,69 @@
-🚀 Task Management & Productivity App
-📝 Description
-A sleek web app designed for remote teams to create, assign, and track tasks with real-time updates — boosting coordination, accountability, and productivity!
+# 🚀 Task Management and Productivity App
 
-✨ Features
-✅ Create & manage tasks
-
-👥 Assign tasks to team members
-
-📌 Set priorities and deadlines
-
-📊 Track task status at a glance
-
-🔔 Receive real-time notifications via Socket.IO
-
-🌡️ Integrate sensor data for advanced tracking (optional!)
-
-🛠️ Tech Stack
-Frontend: React
-Backend: Node.js, Express
-Database: MongoDB
-Real-time: Socket.IO
-Authentication: JWT
-Other: Axios, Mongoose, dotenv, CORS
-
-📁 Project Structure
-pgsql
-Copy
-Edit
+## 📂 Backend Folder Structure
 backend/
 ├── controllers/
-│   ├── authController.js
-│   └── taskController.js
+│ ├── authController.js
+│ └── taskController.js
 ├── middleware/
-│   └── authMiddleware.js
+│ └── authMiddleware.js
 ├── models/
-│   ├── User.js
-│   └── Task.js
+│ ├── User.js
+│ └── Task.js
 ├── routes/
-│   ├── authRoutes.js
-│   └── taskRoutes.js
+│ ├── authRoutes.js
+│ └── taskRoutes.js
 ├── server.js
 ├── sensorInterface.js
 ├── sensorSimulator.js
 └── package.json
 
+shell
+Copy
+Edit
+
+## 📂 Frontend Folder Structure
 frontend/
 ├── public/
-│   └── index.html
+│ └── index.html
 └── src/
-    ├── components/
-    │   ├── TaskForm.js
-    │   └── TaskList.js
-    ├── pages/
-    │   ├── Home.js
-    │   └── Dashboard.js
-    ├── App.js
-    └── index.js
-💻 Getting Started
-Backend
+├── components/
+│ ├── TaskForm.js
+│ └── TaskList.js
+├── pages/
+│ ├── Home.js
+│ └── Dashboard.js
+├── App.js
+└── index.js
 
-bash
+yaml
 Copy
 Edit
+
+---
+
+## ⚙️ Running the Application
+
+### Backend
+
+```bash
+# Navigate to backend folder
 cd backend
-npm install
-npm run dev    # starts the server with nodemon for auto reload
-Frontend
 
+# Install dependencies
+npm install
+
+# Start the backend server (with nodemon/dev)
+npm run dev
+Frontend
 bash
 Copy
 Edit
+# Navigate to frontend folder
 cd frontend
+
+# Install dependencies
 npm install
-npm start      # starts the React development server
-🌐 Usage
-Open your browser at http://localhost:3000
 
-Use the intuitive UI to create, assign, and track tasks effortlessly
-
-Real-time task updates flow seamlessly between connected clients
-
-Sensor data (if enabled) streams to the backend and updates clients instantly
-
+# Start the React app
+npm start
