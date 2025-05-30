@@ -32,82 +32,80 @@ This Task Management and Productivity Web Application is designed for remote tea
    ```bash
    git clone [your-repo-link]
    cd task-management-and-productivity
+# 🚀 Task Management and Productivity App
+
+## 📂 Backend Folder Structure
 backend/
-  controllers/
-    authController.js
-    taskController.js
-  middleware/
-    authMiddleware.js
-  models/
-    User.js
-    Task.js
-  routes/
-    authRoutes.js
-    taskRoutes.js
-  server.js
-  sensorInterface.js
-  sensorSimulator.js
-  package.json
+├── controllers/
+│ ├── authController.js
+│ └── taskController.js
+├── middleware/
+│ └── authMiddleware.js
+├── models/
+│ ├── User.js
+│ └── Task.js
+├── routes/
+│ ├── authRoutes.js
+│ └── taskRoutes.js
+├── server.js
+├── sensorInterface.js
+├── sensorSimulator.js
+└── package.json
 
+shell
+Copy
+Edit
+
+## 📂 Frontend Folder Structure
 frontend/
-  public/
-    index.html
-  src/
-    components/
-      TaskForm.js
-      TaskList.js
-    pages/
-      Home.js
-      Dashboard.js
-    App.js
-    index.js
+├── public/
+│ └── index.html
+└── src/
+├── components/
+│ ├── TaskForm.js
+│ └── TaskList.js
+├── pages/
+│ ├── Home.js
+│ └── Dashboard.js
+├── App.js
+└── index.js
 
-
-🚀 Running the Application
-Backend
-Navigate to the backend directory
-
-bash
+yaml
 Copy
 Edit
+
+---
+
+## ⚙️ Running the Application
+
+### Backend
+
+```bash
+# Navigate to backend folder
 cd backend
-Install dependencies
 
-bash
-Copy
-Edit
+# Install dependencies
 npm install
-Start the server
 
-bash
-Copy
-Edit
+# Start the backend server (with nodemon/dev)
 npm run dev
 Frontend
-Navigate to the frontend directory
-
 bash
 Copy
 Edit
+# Navigate to frontend folder
 cd frontend
-Install dependencies
 
-bash
-Copy
-Edit
+# Install dependencies
 npm install
-Start the React app
 
-bash
-Copy
-Edit
+# Start the React app
 npm start
 📚 Usage
-Access the frontend app in your browser at http://localhost:3000 (or your configured port).
+Open your browser and visit: http://localhost:3000 (or your configured frontend port)
 
-Use the UI to create, assign, and track tasks.
+Use the UI to create, assign, and track tasks easily.
 
-Real-time updates are pushed to all connected clients via Socket.IO.
+Enjoy real-time updates pushed to all connected clients via Socket.IO.
 
-Sensor data (if applicable) is sent to the backend and broadcast to clients.
-
+If using sensors, sensor data will be sent to the backend and broadcast live to clients.
